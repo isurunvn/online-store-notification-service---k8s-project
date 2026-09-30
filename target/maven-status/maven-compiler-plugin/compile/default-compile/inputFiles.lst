@@ -1,9 +1,0 @@
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/NotificationServiceApplication.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/config/MailConfig.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/config/RabbitMQConfig.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/controller/NotificationController.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/dto/OrderCreatedEvent.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/dto/OrderItemInfo.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/listener/NotificationListener.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/service/NotificationService.java
-/media/isuru/E1/DEVOPS/online-store-platform/notification-service/src/main/java/com/onlinestore/notificationservice/service/impl/NotificationServiceImpl.java
