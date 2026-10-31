@@ -45,10 +45,25 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory, org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer configurer) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
+        configurer.configure(factory, connectionFactory);
         factory.setMessageConverter(jsonMessageConverter());
         return factory;
+    }
+
+    @Bean
+    public org.springframework.amqp.core.Declarables failedNotifications() {
+        DirectExchange exchange = new DirectExchange("notification.failed.exchange", true, false);
+        Queue queue = new Queue("notification.failed.queue", true);
+        return new org.springframework.amqp.core.Declarables(exchange, queue,
+                BindingBuilder.bind(queue).to(exchange).with("notification.failed"));
+    }
+
+    @Bean
+    public org.springframework.amqp.rabbit.retry.MessageRecoverer notificationRecoverer(org.springframework.amqp.rabbit.core.RabbitTemplate template) {
+        return new org.springframework.amqp.rabbit.retry.RepublishMessageRecovererWithConfirms(
+                template, "notification.failed.exchange", "notification.failed",
+                org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType.CORRELATED);
     }
 }

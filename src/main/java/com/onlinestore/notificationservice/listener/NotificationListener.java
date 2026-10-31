@@ -11,21 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class NotificationListener {
-
     private final NotificationService notificationService;
 
     @RabbitListener(queues = "${rabbitmq.queue.order-created}")
     public void handleOrderCreatedEvent(OrderCreatedEvent event) {
-        try {
-            log.info("Received OrderCreatedEvent: Order ID: {}, User ID: {}, Total Amount: {}, Item Count: {}",
-                    event.getOrderId(),
-                    event.getUserId(),
-                    event.getTotalAmount(),
-                    event.getItems() != null ? event.getItems().size() : 0);
-
-            notificationService.sendOrderConfirmationEmail(event);
-        } catch (Exception e) {
-            log.error("Failed to process OrderCreatedEvent for Order ID: {}", event.getOrderId(), e);
-        }
+        log.info("Received order event: orderId={}", event.getOrderId());
+        // Let failures reach the listener retry/recovery interceptor.
+        notificationService.sendOrderConfirmationEmail(event);
     }
 }
