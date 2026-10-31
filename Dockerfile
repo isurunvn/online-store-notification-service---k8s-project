@@ -8,6 +8,7 @@ RUN mvn clean verify -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
+USER 10001:10001
 EXPOSE 8084
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD wget -q -O - http://localhost:8084/actuator/health || exit 1
